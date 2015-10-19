@@ -1,0 +1,35 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{personal-letter}[2015/10/18]
+
+% Set text area, and center text
+\usepackage{geometry}
+\geometry{
+  textwidth  = 5.5in,
+  textheight = 8.5in,
+  centering}
+
+% Set the date format to "January 1, 2015"
+\usepackage{datetime}
+\newdateformat{letterdate}{\monthname\ \THEDAY, \THEYEAR}
+\date{\letterdate\today}
+
+% Left align the sender address and date
+\makeatletter
+\def\opening#1{\ifx\@empty\fromaddress
+  \thispagestyle{firstpage}{\raggedleft\@date\par}
+  \else  % home address
+  \thispagestyle{empty}{
+    \noindent\let \\
+    \cr\halign{##\hfil\cr\ignorespaces
+      \fromaddress \cr\noalign{\kern 2\parskip}
+      \@date\cr}\par}
+  \fi
+  \vspace{\parskip}{\raggedright \toname \\ \toaddress \par}
+  \vspace{2\parskip}
+  #1\par\nobreak}
+\makeatother
+
+% Left align the closing section
+\longindentation = 0pt
+
+\endinput
